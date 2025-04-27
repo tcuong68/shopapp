@@ -9,5 +9,7 @@ import lombok.experimental.FieldDefaults;
 @Builder //khong can day du cac truong van tao duoc Object
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentResponse {
+    String code;
+    String message;
     String paymentUrl;
 }

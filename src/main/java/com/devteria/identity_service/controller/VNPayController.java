@@ -4,6 +4,7 @@ import com.devteria.identity_service.dto.request.PaymentRequest;
 import com.devteria.identity_service.dto.response.ApiResponse;
 import com.devteria.identity_service.dto.response.PaymentResponse;
 import com.devteria.identity_service.service.VNPayService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,9 +18,8 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class VNPayController {
     VNPayService vnPayService;
-
-    @PostMapping("/vnpay/create")
-    public ApiResponse<PaymentResponse> createPayment(@RequestBody PaymentRequest request) {
+    @GetMapping("/vnpay/create")
+    public ApiResponse<PaymentResponse> createPayment(HttpServletRequest request) {
         return ApiResponse.<PaymentResponse>builder()
                 .result(vnPayService.createPaymentUrl(request))
                 .message("Payment URL created successfully")
