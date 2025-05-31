@@ -1,0 +1,26 @@
+<header id="site-header" class="main-header">
+    <nav class="main-nav">
+        <div class="wrap-logo">
+            <a routerLink="/" title="Logo">
+                <img width="110" height="55" alt="Logo" src="https://pos.nvncdn.com/e41e16-5527/store/20240820_jRhCzjIO.jpg">
+            </a>
+        </div>
+        <ul class="nav-menu">
+            <li class="menu__item"><a routerLink="/home-page" class="menu__link" routerLinkActive="active">TRANG CHỦ</a></li>
+            <li class="menu__item"><a [routerLink]="['/search']"  [queryParams]="{ slug: 'quan' }" class="menu__link" routerLinkActive="active">QUẦN</a></li>
+            <li class="menu__item"><a [routerLink]="['/search']" [queryParams]="{ slug: 'ao' }" class="menu__link" routerLinkActive="active">ÁO</a></li>
+            <li class="menu__item"><a [routerLink]="['/search']" [queryParams]="{ slug: 'phu-kien' }" class="menu__link" routerLinkActive="active">PHỤ KIỆN</a></li>
+            <li class="menu__item"><a [routerLink]="['/search']" [queryParams]="{ slug: 'qua-tang' }" class="menu__link" routerLinkActive="active">QUÀ TẶNG</a></li>
+            <!-- <li class="menu__item" *ngIf="isAdmin"><a routerLink="/admin" class="menu__link" routerLinkActive="active">ADMIN</a></li> -->
+        </ul>
+        <div class="nav-icons">
+            <span class="icon-search" routerLink="/search">🔍</span>
+            <span class="icon-account" routerLink="/login">👤</span>
+            <span class="icon-cart" routerLink="/cart">🛒</span>
+        </div>
+    </nav>
+</header>
+
+<div class="content-container">
+    <router-outlet></router-outlet>
+</div>

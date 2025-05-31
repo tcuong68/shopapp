@@ -1,0 +1,94 @@
+<div class="content-header">
+  <h4>Danh sách người dùng</h4>
+</div>
+<p class="text-info">Tổng số người dùng: {{ users.length }}</p>
+<div class="card search-panel">
+  <h5 class="text-danger">Tìm kiếm</h5>
+  <div class="row">
+    <div class="col-md-4">
+      <label for="name" class="form-label">Họ</label>
+      <input type="text" id="name" class="form-control" [(ngModel)]="searchParams.firstName">
+    </div>
+    <div class="col-md-4">
+      <label for="username" class="form-label">Tên</label>
+      <input type="text" id="username" class="form-control" [(ngModel)]="searchParams.lastName">
+    </div>
+    <div class="col-md-4">
+      <label for="searchRole" class="form-label">Role</label>
+      <select id="searchRole" class="form-select" [(ngModel)]="searchParams.role">
+        <option value="">-- Chọn Role --</option>
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-4">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" id="username" class="form-control" [(ngModel)]="searchParams.username">
+    </div>
+    
+    <div class="col-md-4">
+      <label for="phone" class="form-label">Địa chỉ</label>
+      <input type="text" id="location" class="form-control" [(ngModel)]="searchParams.location">
+    </div>
+  </div>
+  <div class="d-flex justify-content-end mt-3">
+    <button (click)="searchUsers()" class="btn btn-danger">Tìm kiếm</button>
+  </div>
+</div>
+
+<div class="action-buttons">
+  <button (click)="deleteSelectedUsers()" class="btn btn-danger" title="Xóa người dùng">Xóa</button>
+  <button routerLink="/admin/users/create" class="btn btn-primary" title="Thêm người dùng">Thêm người dùng</button>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th><input type="checkbox" (change)="toggleSelectAll($event)"></th>
+        <th>Username</th>
+        <th>Họ và tên</th>
+        <th>Ngày sinh</th>
+        <th>Địa chỉ</th>
+        <th>Role</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of paginatedUsers">
+        <td><input type="checkbox" [checked]="user.selected" (change)="toggleUserSelection(user)"></td>
+        <td>{{user.username}}</td>
+        <td>{{user.fullname}}</td>
+        <td>{{user.dob}}</td>
+        <td>{{user.location}}</td>
+        <td>{{ user.roles?.[0]?.name || '' }}</td>
+        <td class="table-actions">
+          <button class="btn btn-warning" title="Cập nhật" (click)="editUser(user.id)">Cập nhật</button>
+          <button class="btn btn-danger" title="Xóa" (click)="deleteUser(user.id)">Xóa</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<nav *ngIf="totalPages > 0">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="currentPage === 1">
+      <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage - 1)">
+        &laquo;
+      </a>
+    </li>
+    <li class="page-item" *ngFor="let page of getPageArray()" [class.active]="page === currentPage">
+      <a class="page-link" href="javascript:void(0)" (click)="changePage(page)">
+        {{page}}
+      </a>
+    </li>
+    <li class="page-item" [class.disabled]="currentPage === totalPages">
+      <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage + 1)">
+        &raquo;
+      </a>
+    </li>
+  </ul>
+</nav>

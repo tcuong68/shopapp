@@ -1,0 +1,28 @@
+<!-- Carousel -->
+<div class="carousel-container">
+    <div class="carousel">
+        <!-- <img src="assets/images/product_img2.jpeg" alt="Sản phẩm 1">
+        <img src="assets/images/product_img1.jpeg" alt="Sản phẩm 2">
+        <img src="assets/images/product_img2.jpeg" alt="Sản phẩm 3">
+        <img src="assets/images/product_img2.jpeg" alt="Sản phẩm 1">
+        <img src="assets/images/product_img1.jpeg" alt="Sản phẩm 2">
+        <img src="assets/images/product_img2.jpeg" alt="Sản phẩm 3"> -->
+    </div>
+</div>
+
+<!-- Giới thiệu Best Seller -->
+<div class="best-seller-title">SẢN PHẨM BÁN CHẠY</div>
+<div class="best-seller-desc">Những sản phẩm được yêu thích nhất bởi khách hàng của chúng tôi. Đừng bỏ lỡ!</div>
+
+<!-- Danh sách sản phẩm -->
+<main class="main">
+    <div class="product" *ngFor="let product of products">
+        <img 
+        [src]="getProductImage(product)" 
+        [alt]="product.name" 
+        (click)="navigateToProductDetail(product.id)"
+        >   
+        <div class="product-name">{{product.name}}</div>
+        <div class="product-price">{{product.price | currency:'VND':'symbol':'1.0-0'}}</div>
+    </div>
+</main>

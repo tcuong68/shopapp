@@ -1,0 +1,133 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    min-height: 100vh;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.wrap-logo {
+    margin-right: 20px;
+}
+
+.wrap-logo img {
+    width: 80px;
+    height: auto;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.menu__item {
+    margin: 0 15px;
+}
+
+.menu__link {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.menu__link:hover {
+    color: #007bff;
+}
+
+
+.account-container {
+    max-width: 1200px;
+    margin: 80px auto 0; /* Để tránh chồng lên header */
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.account-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.account-links {
+    max-width: 200px;
+    text-align: left;
+}
+
+.account-links a {
+    display: block;
+    margin: 15px 0;
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+}
+
+.account-links a:hover {
+    color: #007bff;
+}
+
+.account-details {
+    flex: 1;
+    max-width: 1400px; /* Giữ chiều rộng bảng như yêu cầu trước */
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.account-details .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.account-details .col {
+    flex: 1; /* Chia đều không gian cho các cột */
+    padding: 5px;
+    font-size: 16px;
+    color: #333;
+    text-align: center; /* Căn giữa văn bản trong mỗi cột */
+    white-space: nowrap; /* Ngăn nội dung xuống dòng */
+    overflow: hidden; /* Ẩn nội dung vượt quá chiều rộng */
+    text-overflow: ellipsis; /* Thêm dấu ... nếu nội dung quá dài */
+}
+
+.account-details .col b {
+    font-weight: bold;
+}
+
+/* Đảm bảo tiêu đề và nội dung thẳng hàng hoàn toàn */
+.account-details .headers, .account-details .values {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.account-details .headers .col {
+    font-weight: bold;
+}
+
+.account-details .values .col {
+    font-weight: normal;
+}

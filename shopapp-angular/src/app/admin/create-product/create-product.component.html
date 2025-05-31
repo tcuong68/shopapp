@@ -1,0 +1,103 @@
+<h4>{{ isEditMode ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm' }}</h4>
+<div class="card p-3">
+    <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+        <div class="col-xs-12">
+            <div class="form-horizontal" role="form">
+
+                <!-- Tên sản phẩm -->
+                <div class="form-group">
+                    <label class="col-sm-3">(*) Tên sản phẩm:</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" id="name" formControlName="name" required/>
+                        <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="text-danger">
+                            Vui lòng nhập tên sản phẩm
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mô tả sản phẩm -->
+                <div class="form-group">
+                    <label class="col-sm-3">Mô tả:</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" id="description" formControlName="description"></textarea>
+                    </div>
+                </div>
+
+                <!-- Danh mục -->
+                <div class="form-group">
+                    <label class="col-sm-3">(*) Danh mục:</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="category" formControlName="category" required>
+                            <option value="" disabled selected>Chọn danh mục</option>
+                            <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
+                        </select>
+                        <div *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched" class="text-danger">
+                            Vui lòng chọn danh mục
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Giá sản phẩm -->
+                <div class="form-group">
+                    <label class="col-sm-3">(*) Giá sản phẩm:</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="number" id="price" formControlName="price" required/>
+                        <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="text-danger">
+                            Vui lòng nhập giá bán sản phẩm
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ảnh mô tả -->
+                <div class="form-group">
+                    <label class="col-sm-3">(*) Ảnh mô tả:</label>
+                    <div class="col-sm-5">
+                        <input id="fileInput" class="form-control" type="file" (change)="onFileSelected($event)" accept="image/*" [required]="!isEditMode" />
+                    </div>
+                </div>
+
+                <!-- <div class="col-sm-5 mt-2 mb-3" *ngIf="imagePreviewUrl">
+                    <img [src]="imagePreviewUrl" alt="Ảnh mô tả" style="width:200px; height:300px;" />
+                </div>
+
+                <button type="button" class="btn btn-secondary mb-3" *ngIf="imagePreviewUrl" (click)="cropImage()">Crop Ảnh</button> -->
+
+                <!-- Biến thể -->
+                <div class="form-group">
+                    <label class="col-sm-3">(*) Biến thể sản phẩm:</label>
+                    <div class="col-sm-9">
+                        <table class="table table-bordered" id="variantsTable">
+                            <thead>
+                                <tr>
+                                    <th>Size</th>
+                                    <th>Màu sắc</th>
+                                    <th>Giá bán</th>
+                                    <th>Số lượng</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody formArrayName="variants">
+                                <tr *ngFor="let variant of getVariantsControls(); let i = index" [formGroupName]="i">
+                                    <td><input class="form-control" type="text" formControlName="size" required/></td>
+                                    <td><input class="form-control" type="text" formControlName="color" required/></td>
+                                    <td><input class="form-control" type="number" formControlName="price" required min="1"/></td>
+                                    <td><input class="form-control" type="number" formControlName="quantity" required min="0"/></td>
+                                    <td><button type="button" class="btn btn-danger" (click)="removeVariant(i)">Xóa</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-success" (click)="addVariant()">+ Thêm biến thể</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary me-2">
+                {{ isEditMode ? 'Cập nhật sản phẩm' : 'Lưu sản phẩm' }}
+            </button>
+            <button type="button" class="btn btn-danger" (click)="cancel()">Hủy</button>
+        </div>
+    </form>
+</div>

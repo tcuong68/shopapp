@@ -1,0 +1,101 @@
+<h4>{{ isEditMode ? 'Cập nhật người dùng' : 'Thêm người dùng' }}</h4>
+<div class="card p-3">
+  <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+    <div class="col-xs-12">
+      <div class="form-horizontal" role="form">
+
+        <!-- Họ -->
+        <div class="form-group">
+          <label class="col-sm-3">(*) Họ:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text" formControlName="firstName" required />
+            <div *ngIf="hasError('firstName', 'required')" class="text-danger">Vui lòng nhập họ</div>
+          </div>
+        </div>
+
+        <!-- Tên -->
+        <div class="form-group">
+          <label class="col-sm-3">(*) Tên:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text" formControlName="lastName" required />
+            <div *ngIf="hasError('lastName', 'required')" class="text-danger">Vui lòng nhập tên</div>
+          </div>
+        </div>
+
+        <!-- Tên đăng nhập -->
+        <div class="form-group">
+          <label class="col-sm-3">(*) Tên đăng nhập:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text" formControlName="username" required />
+            <div *ngIf="hasError('username', 'required')" class="text-danger">Vui lòng nhập tên đăng nhập</div>
+          </div>
+        </div>
+
+
+        <!-- Mật khẩu -->
+        <div class="form-group" *ngIf="!isEditMode">
+          <label class="col-sm-3">(*) Mật khẩu:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="password" formControlName="password" [required]="!isEditMode" />
+            <div *ngIf="hasError('password', 'required') || hasError('password', 'minlength')" class="text-danger">
+              <span *ngIf="hasError('password', 'required')">Vui lòng nhập mật khẩu</span>
+              <span *ngIf="hasError('password', 'minlength')">Mật khẩu ít nhất 8 ký tự</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nhập lại mật khẩu -->
+        <div class="form-group" *ngIf="!isEditMode">
+          <label class="col-sm-3">(*) Nhập lại mật khẩu:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="password" formControlName="confirmPassword" />
+            <div *ngIf="hasError('confirmPassword', 'required') || hasPasswordMismatch()" class="text-danger">
+              <span *ngIf="hasError('confirmPassword', 'required')">Vui lòng xác nhận mật khẩu</span>
+              <span *ngIf="hasPasswordMismatch()">Mật khẩu không khớp</span>
+            </div>
+          </div>
+        </div>
+
+     
+        <!-- Địa chỉ -->
+        <div class="form-group">
+          <label class="col-sm-3">Địa chỉ:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text" formControlName="location" />
+          </div>
+        </div>
+
+        <!-- Ngày sinh -->
+        <div class="form-group">
+          <label class="col-sm-3">Ngày sinh:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="date" formControlName="dob" />
+          </div>
+        </div>
+
+        <!-- Role -->
+        <div class="form-group">
+          <label class="col-sm-3">(*) Role:</label>
+          <div class="col-sm-9">
+            <select class="form-control" formControlName="role" required>
+              <option value="" disabled>Chọn vai trò</option>
+              <option *ngFor="let role of availableRoles" [value]="role.id">{{ role.name }}</option>
+            </select>
+            <div *ngIf="hasError('role', 'required')" class="text-danger">Vui lòng chọn vai trò</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <button type="submit" class="btn btn-primary me-2" [disabled]="userForm.invalid || loading">
+        {{ isEditMode ? 'Cập nhật người dùng' : 'Lưu người dùng' }}
+      </button>
+      <button type="button" class="btn btn-danger" (click)="cancel()">Hủy</button>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-2">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="alert alert-success mt-2">{{ successMessage }}</div>
+  </form>
+</div>

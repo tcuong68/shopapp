@@ -1,0 +1,79 @@
+<!-- <!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh Toán Đơn Hàng</title>
+</head>
+<body>
+<header id="site-header" class="main-header">
+  <nav class="main-nav">
+    <div class="wrap-logo">
+      <a aria-label="logo" href="/" title="Logo">
+        <img width="110" height="55" alt="Logo" src="https://pos.nvncdn.com/e41e16-5527/store/20240820_jRhCzjIO.jpg">
+      </a>
+    </div>
+    <ul class="nav-menu">
+      <li class="menu__item"><a href="/" title="Trang chủ" class="menu__link">TRANG CHỦ</a></li>
+      <li class="menu__item"><a href="/quan.html" title="QUẦN" class="menu__link">QUẦN</a></li>
+      <li class="menu__item"><a href="/ao.html" title="ÁO" class="menu__link">ÁO</a></li>
+      <li class="menu__item"><a href="/phu-kien.html" title="PHỤ KIỆN" class="menu__link">PHỤ KIỆN</a></li>
+      <li class="menu__item"><a href="/qua-tang.html" title="QUÀ TẶNG" class="menu__link">QUÀ TẶNG</a></li>
+    </ul>
+    <div class="nav-icons">
+      <span class="icon-search" title="Tìm kiếm">🔍</span>
+      <span class="icon-account" title="Tài khoản">👤</span>
+      <span class="icon-cart" title="Giỏ hàng">🛒</span>
+    </div>
+  </nav>
+</header> -->
+<div class="checkout-container">
+
+  <!-- THÔNG BÁO ĐẶT HÀNG -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }} Bạn sẽ được chuyển về trang chủ...
+  </div>
+
+  <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" novalidate>
+<div class="checkout-container">
+  <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="customer-info">
+      <h2>Thông tin giao hàng</h2>
+      <input formControlName="customerName" type="text" placeholder="Họ tên">
+      <input formControlName="email" type="email" placeholder="Email">
+      <input formControlName="phoneNumber" type="tel" placeholder="Số điện thoại">
+      <input formControlName="address" type="text" placeholder="Địa chỉ">
+      <textarea formControlName="note" placeholder="Ghi chú (nếu có)"></textarea>
+
+      <select formControlName="paymentMethod">
+        <option *ngFor="let method of paymentMethods" [value]="method.id">{{ method.name }}</option>
+      </select>
+    </div>
+
+    <div class="order-summary" *ngIf="orderData?.items?.length">
+      <h2>Đơn hàng của bạn</h2>
+      <div class="order-item" *ngFor="let item of orderData.items">
+        <div class="item-details">
+          <p>{{ item.productName }} - {{ item.size }}</p>
+          <p>Số lượng: {{ item.quantity }}</p>
+        </div>
+        <p class="item-price">{{ item.price | number }} đ</p>
+      </div>
+
+      <div class="summary-details">
+        <p>Tạm tính: <span>{{ orderData.subtotal | number }} đ</span></p>
+        <p>Phí vận chuyển: <span>{{ orderData.shippingFee | number }} đ</span></p>
+        <p>Tổng cộng: <strong>{{ orderData.total | number }} đ</strong></p>
+      </div>
+
+      <button type="submit" class="checkout-btn" [disabled]="loading">Hoàn tất đơn hàng</button>
+      <p class="note">Sau khi đặt hàng, chúng tôi sẽ liên hệ xác nhận với bạn qua Email hoặc Điện thoại.</p>
+    </div>
+  </form>
+
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+</div>

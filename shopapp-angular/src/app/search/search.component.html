@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="sidebar">
+        <form (ngSubmit)="onSearch()">
+            <h3>SẢN PHẨM</h3>
+            <input type="text" class="search-input" placeholder="Tên sản phẩm" [(ngModel)]="searchRequest.name" name="name" />
+            <h3>SIZE</h3>
+            <input type="text" class="search-input" placeholder="Kích thước" [(ngModel)]="searchRequest.size" name="size" />
+            <h3>MÀU SẮC</h3>
+            <input type="text" class="search-input" placeholder="Màu sắc" [(ngModel)]="searchRequest.color" name="color" />
+            <h3>MỨC GIÁ</h3>
+            <input type="number" class="search-input" placeholder="Giá tối thiểu" [(ngModel)]="searchRequest.minPrice" name="minPrice" />
+            <input type="number" class="search-input" placeholder="Giá tối đa" [(ngModel)]="searchRequest.maxPrice" name="maxPrice" />
+            <h3>DANH MỤC</h3>
+            <select class="search-input" [(ngModel)]="searchRequest.category" name="category">
+              <option value="">-- Tất cả --</option>
+              <option *ngFor="let category of categories" [value]="category.slug">{{ category.name }}</option>
+            </select>            <button type="submit">Tìm kiếm</button>
+        </form>
+    </div>
+    <div class="content">
+        <div *ngIf="isLoading">Đang tải sản phẩm...</div>
+        <div *ngIf="!isLoading && products.length === 0">Không có sản phẩm nào phù hợp.</div>
+        <div *ngFor="let product of products" class="product-item">
+          <img 
+          [src]="getProductImage(product)" 
+          [alt]="product.name" 
+          (click)="navigateToProductDetail(product.id)"
+          > 
+           <h4>{{ product.name }}</h4>
+            <p class="price">{{ product.price | number }} đ</p>
+            <!-- <p class="out-of-stock" *ngIf="!product.inStock">HẾT HÀNG</p> -->
+        </div>
+    </div>
+</div>
+<nav *ngIf="totalPages > 0">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="pageNumber === 0">
+      <a class="page-link" href="javascript:void(0)" (click)="changePage(pageNumber - 1)">
+        &laquo;
+      </a>
+    </li>
+    <li class="page-item" *ngFor="let page of getPageArray()" [class.active]="page === pageNumber">
+      <a class="page-link" href="javascript:void(0)" (click)="changePage(page)">
+        {{page + 1}}
+      </a>
+    </li>
+    <li class="page-item" [class.disabled]="pageNumber === totalPages - 1">
+      <a class="page-link" href="javascript:void(0)" (click)="changePage(pageNumber + 1)">
+        &raquo;
+      </a>
+    </li>
+  </ul>
+</nav>

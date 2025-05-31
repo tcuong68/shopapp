@@ -1,0 +1,96 @@
+<div class="content-header">
+  <h4>Danh sách sản phẩm</h4>
+</div>
+<p class="text-info">Tổng số sản phẩm: {{ products.length }}</p>
+<div class="card search-panel">
+  <h5 class="text-danger">Tìm kiếm</h5>
+  <div class="row">
+    <div class="col-md-4">
+      <label for="searchName" class="form-label">Tên sản phẩm</label>
+      <input type="text" id="searchName" class="form-control" [(ngModel)]="searchRequest.name">
+    </div>
+    <div class="col-md-4">
+      <label for="searchCategory" class="form-label">Danh mục</label>
+      <select id="searchCategory" class="form-select" [(ngModel)]="searchRequest.category">
+        <option value="">-- Chọn danh mục --</option>
+        <option *ngFor="let cat of categories" [value]="cat.slug">{{cat.name}}</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="size" class="form-label">Kích thước</label>
+      <input type="text" id="size" class="form-control" [(ngModel)]="searchRequest.size">
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-2">
+      <label for="priceFrom" class="form-label">Giá bán từ</label>
+      <input type="number" id="priceFrom" class="form-control" [(ngModel)]="searchRequest.minPrice">
+    </div>
+    <div class="col-md-2">
+      <label for="priceTo" class="form-label">Giá bán đến</label>
+      <input type="number" id="priceTo" class="form-control" [(ngModel)]="searchRequest.maxPrice">
+    </div>
+    <div class="col-md-2">
+      <label for="color" class="form-label">Màu sắc</label>
+      <input type="text" id="color" class="form-control" [(ngModel)]="searchRequest.color">
+    </div>
+  </div>
+  <div class="d-flex justify-content-end mt-3">
+    <button (click)="searchProducts()" class="btn btn-danger">Tìm kiếm</button>
+  </div>
+</div>
+
+<div class="action-buttons">
+  <button (click)="deleteSelectedProducts()" class="btn btn-danger" title="Xóa sản phẩm"><i class="bi bi-trash"></i>Xóa</button>
+  <button routerLink="/admin/products/create" class="btn btn-primary" title="Thêm sản phẩm"><i class="bi bi-database-add"></i>Thêm sản phẩm</button>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th><input type="checkbox" (change)="toggleSelectAll($event)"></th>
+        <th>Tên sản phẩm</th>
+        <th>Loại</th>
+        <th>Giá bán</th>
+        <th>Màu sắc</th>
+        <th>Số lượng còn lại</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of paginatedProducts">
+        <td><input type="checkbox" [checked]="product.selected" (change)="toggleProductSelection(product)"></td>
+        <td>{{product.name}}</td>
+        <td>{{product.categoryName}}</td>
+        <td>{{product.price | currency:'VND':'symbol':'1.0-0'}}</td>
+        <td>{{product.variants[0].color}}</td>
+        <td>{{product.variants[0].quantity}}</td>
+        <td class="table-actions">
+          <button class="btn btn-warning btn-sm" title="Cập nhật" (click)="editProduct(product.id)"><i class="bi bi-pencil-square"></i>Cập nhật</button>
+          <button class="btn btn-danger btn-sm" title="Xóa" (click)="deleteProduct(product.id)"><i class="bi bi-trash"></i>Xóa</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<nav *ngIf="totalPages > 0">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="currentPage === 1">
+      <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage - 1)">
+        &laquo;
+      </a>
+    </li>
+    <li class="page-item" *ngFor="let page of getPageArray()" [class.active]="page === currentPage">
+      <a class="page-link" href="javascript:void(0)" (click)="changePage(page)">
+        {{page}}
+      </a>
+    </li>
+    <li class="page-item" [class.disabled]="currentPage === totalPages">
+      <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage + 1)">
+        &raquo;
+      </a>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,146 @@
+<style>
+    
+    /* CSS cho carousel */
+    .carousel-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 80px auto 20px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .carousel {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+    }
+
+    /* CSS cho phần giới thiệu */
+    .best-seller-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 20px 0;
+        
+    }
+
+    .best-seller-desc {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    /* CSS cho phần sản phẩm */
+    .main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .product {
+        width: 22%;
+        margin: 1%;
+        text-align: center;
+    }
+
+    .product img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+
+    .product-name {
+        font-size: 16px;
+        margin: 10px 0 5px;
+    }
+
+    .product-price {
+        color: #000000;
+        font-weight: bold;
+    }
+</style>
+<app-header></app-header>
+<body>
+    <!-- Carousel -->
+    <div class="carousel-container">
+        <div class="carousel">
+            <img src="images/product_img2.jpeg" alt="Sản phẩm 1">
+            <img src="images/product_img1.jpeg" alt="Sản phẩm 2">
+            <img src="images/product_img2.jpeg" alt="Sản phẩm 3">
+            <img src="images/product_img2.jpeg" alt="Sản phẩm 1">
+            <img src="images/product_img1.jpeg" alt="Sản phẩm 2">
+            <img src="images/product_img2.jpeg" alt="Sản phẩm 3">
+        </div>
+    </div>
+    
+    <!-- Giới thiệu Best Seller -->
+    <div class="best-seller-title">SẢN PHẨM BÁN CHẠY</div>
+    <div class="best-seller-desc">Những sản phẩm được yêu thích nhất bởi khách hàng của chúng tôi. Đừng bỏ lỡ!</div>
+    
+    <!-- Danh sách sản phẩm -->
+    <main class="main">
+        <div class="product">
+            <img src="images/product_img2.jpeg" alt="Khăn Dạ Trơn 2485">
+            <div class="product-name">Khăn Dạ Trơn 2485</div>
+            <div class="product-price">140.000 đ</div>
+        </div>
+    
+        <div class="product">
+            <img src="images/product_img1.jpeg" alt="Quần Jeans Ống Suông T2517">
+            <div class="product-name">Quần Jeans Ống Suông T2517</div>
+            <div class="product-price">420.000 đ</div>
+        </div>
+    
+        <div class="product">
+            <img src="images/product_img1.jpeg" alt="Quần Vải Thô Suông K9031">
+            <div class="product-name">Quần Vải Thô Suông K9031</div>
+            <div class="product-price">400.000 đ</div>
+        </div>
+    
+        <div class="product">
+            <img src="images/product_img2.jpeg" alt="Mũ Juki 2442">
+            <div class="product-name">Mũ Juki 2442</div>
+            <div class="product-price">150.000 đ</div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const carousel = document.querySelector(".carousel");
+            const slides = document.querySelectorAll(".carousel img");
+            const totalSlides = slides.length;
+            let index = 0;
+            let intervalTime = 10000; // Thời gian trượt
+            let autoSlide;
+    
+            function slideShow() {
+                index++;
+    
+                if (index >= totalSlides) {
+                    // Nếu đến ảnh cuối, ngay lập tức reset về ảnh đầu mà không có hiệu ứng
+                    carousel.style.transition = "none";
+                    index = 0;
+                    carousel.style.transform = `translateX(0%)`;
+                } else {
+                    // Chuyển ảnh bình thường với hiệu ứng trượt
+                    carousel.style.transition = "transform 0.5s ease-in-out";
+                    carousel.style.transform = `translateX(${-index * 100}%)`;
+                }
+            }
+    
+            function startAutoSlide() {
+                autoSlide = setInterval(slideShow, intervalTime);
+            }
+    
+            startAutoSlide(); // Chạy carousel khi load trang
+        });
+    </script>
+    
+    </body>

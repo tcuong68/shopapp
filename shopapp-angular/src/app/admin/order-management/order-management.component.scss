@@ -1,0 +1,67 @@
+.card {
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.table {
+    margin-bottom: 1rem;
+}
+
+.table th {
+    background-color: #f8f9fa;
+}
+
+.pagination {
+    margin-top: 20px;
+}
+
+.btn {
+    margin-left: 5px;
+}
+
+/* Search section */
+.text-danger {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.row {
+    margin-bottom: 15px;
+}
+
+/* Action buttons */
+.table-actions button {
+    margin-right: 5px;
+}
+
+/* Status styling */
+.status-pending {
+    color: #ffc107;
+}
+
+.status-processing {
+    color: #17a2b8;
+}
+
+.status-shipping {
+    color: #007bff;
+}
+
+.status-completed {
+    color: #28a745;
+}
+
+.status-cancelled {
+    color: #dc3545;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .col-md-4, .col-md-2 {
+        margin-bottom: 10px;
+    }
+}

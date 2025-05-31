@@ -1,0 +1,52 @@
+<div class="cart-container">
+    <h1 class="cart-title">GIỎ HÀNG</h1>
+
+    <div class="alert alert-info" *ngIf="cartItems.length === 0">
+        Giỏ hàng của bạn đang trống. <a routerLink="/home-page">Tiếp tục mua sắm</a>
+    </div>
+
+    <div class="cart-content" *ngIf="cartItems.length > 0">
+        <div class="cart-items">
+            <div class="cart-product" *ngFor="let item of cartItems; let i = index">
+                
+                <div class="product-info">
+                    <div class="product-details">
+                        <p class="product-name">{{item.productName}}</p>
+                        <button class="remove-btn" (click)="removeItem(i)">Xóa</button>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" (click)="decreaseQuantity(i)">-</button>
+                        <span class="quantity-value">{{item.quantity}}</span>
+                        <button class="quantity-btn" (click)="increaseQuantity(i)">+</button>
+                    </div>
+                    <div class="product-price">
+                        <p class="price">{{item.price * item.quantity | currency:'VND':'symbol':'1.0-0'}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart-summary">
+            <div class="cart-order">
+                <h2>Tóm tắt đơn hàng</h2>
+                <div class="summary-row">
+                    <p>Tổng tiền sản phẩm:</p>
+                    <p class="price">{{getSubtotal() | currency:'VND':'symbol':'1.0-0'}}</p>
+                </div>
+                <div class="summary-row">
+                    <p>Phí vận chuyển:</p>
+                    <p class="price">{{shippingFee | currency:'VND':'symbol':'1.0-0'}}</p>
+                </div>
+                <div class="summary-row total">
+                    <p>Tổng thanh toán:</p>
+                    <p class="price">{{getTotal() | currency:'VND':'symbol':'1.0-0'}}</p>
+                </div>
+                <button class="checkout-button" (click)="checkout()">THANH TOÁN</button>
+            </div>
+        </div>
+
+        <div class="cart-note">
+            <textarea placeholder="Ghi chú đơn hàng..." [(ngModel)]="orderNote"></textarea>
+        </div>
+    </div>
+</div>

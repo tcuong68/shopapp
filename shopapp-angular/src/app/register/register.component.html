@@ -1,0 +1,26 @@
+<app-header></app-header>
+<div class="register-container">
+    <div class="left">
+      <h1 class="register-title">ĐĂNG KÝ</h1>
+    </div>
+    <div class="right">
+        <form class="register-form" #registerForm="ngForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <input type="text" placeholder="Tên đăng nhập" name="username" [(ngModel)]="user.username" required>
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Mật khẩu" name="password" [(ngModel)]="user.password" required>
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="Họ" name="firstName" [(ngModel)]="user.firstName" required>
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="Tên" name="lastName" [(ngModel)]="user.lastName" required>
+            </div>
+            <div class="form-group">
+              <input type="date" placeholder="Ngày sinh" name="dob" [(ngModel)]="user.dob" required>
+            </div>
+            <button type="submit" class="register-button">ĐĂNG KÝ</button>
+          </form>
+    </div>
+  </div>

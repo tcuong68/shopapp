@@ -1,0 +1,98 @@
+<main class="product-container" *ngIf="product">
+  <div class="product-images">
+    <img [src]="getProductImage(product)"  [alt]="product.name" > 
+    <div class="thumbnails">
+      <img *ngFor="let image of product.imageUrls"
+           [src]="'http://localhost:8080/shopapp' + image"
+           [alt]="product.name"
+           class="thumbnail"
+           [class.active]="selectedImage === 'http://localhost:8080/shopapp' + image"
+           (click)="selectImage('http://localhost:8080/shopapp' + image)">
+    </div>
+  </div>
+
+  <div class="product-info">
+    <h2 class="product-name">{{ product.name }}</h2>
+    <p class="product-price">
+      {{ selectedVariant?.price || product.price | currency: 'VND':'symbol':'1.0-0' }}
+    </p>
+
+    <div class="product-options">
+      <!-- CHỌN MÀU -->
+      <label for="color">CHỌN MÀU:</label>
+      <select id="color" [(ngModel)]="selectedColor" (change)="updateSelectedVariant()">
+        <option *ngFor="let color of availableColors" [value]="color">{{ color }}</option>
+      </select>
+
+      <!-- CHỌN SIZE -->
+      <label for="size">CHỌN SIZE:</label>
+      <select id="size" [(ngModel)]="selectedSize" (change)="updateSelectedVariant()">
+        <option *ngFor="let size of availableSizes" [value]="size">{{ size }}</option>
+      </select>
+
+      <div class="quantity-controls">
+        <button class="quantity-btn" (click)="decreaseQuantity()">-</button>
+        <span class="quantity-value">{{ quantity }}</span>
+        <button class="quantity-btn" (click)="increaseQuantity()">+</button>
+      </div>
+    </div>
+
+    <button class="buy-btn" (click)="addToCart()" [disabled]="!selectedVariant">THÊM VÀO GIỎ HÀNG</button>
+  </div>
+</main>
+<div class="review-section mt-5">
+  <h4>Đánh giá sản phẩm</h4>
+  <form (ngSubmit)="submitReview()" #reviewForm="ngForm">
+    <div class="mb-3">
+      <label for="rating" class="form-label">Đánh giá (sao):</label>
+      <select id="rating" class="form-select" required [(ngModel)]="review.rating" name="rating">
+        <option *ngFor="let r of [1,2,3,4,5]" [value]="r">{{ r }} sao</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="comment" class="form-label">Bình luận:</label>
+      <textarea id="comment" class="form-control" required [(ngModel)]="review.comment" name="comment" rows="3"></textarea>
+    </div>
+
+    <button class="btn btn-primary" type="submit" [disabled]="!reviewForm.form.valid">Gửi đánh giá</button>
+  </form>
+</div>
+<div class="loading" *ngIf="!product">
+  Đang tải thông tin sản phẩm...
+</div>
+
+
+<div class="review-list" *ngIf="productReviews && productReviews.length > 0">
+  <h5 class="mb-3">Đánh giá của khách hàng</h5>
+
+  
+<div class="average-rating" *ngIf="averageRating > 0">
+  <span class="text-muted">Đánh giá trung bình:</span>
+  <span class="stars">
+    <ng-container *ngFor="let star of getStarsArrayForAverage()">
+      <i class="bi bi-star-fill text-warning"></i>
+    </ng-container>
+    <span class="text-muted ms-2">({{ averageRating.toFixed(1) }} / 5)</span>
+  </span>
+</div>
+
+  <div class="review-item" *ngFor="let review of productReviews">
+    <div class="review-header d-flex align-items-center justify-content-between">
+      <span class="review-rating">
+        <ng-container *ngFor="let star of getStarsArray(review.rating)">
+          <i class="bi bi-star-fill text-warning"></i>
+        </ng-container>
+      </span>
+      <span class="review-meta">
+        {{ review.username || 'Người dùng ẩn danh' }} •
+        {{ review.createdAt | date:'dd/MM/yyyy HH:mm' }}
+      </span>
+    </div>
+    <p class="review-comment">{{ review.comment }}</p>
+  </div>
+</div>
+
+<div class="text-muted" *ngIf="productReviews?.length === 0">
+  Chưa có đánh giá nào cho sản phẩm này.
+</div>
